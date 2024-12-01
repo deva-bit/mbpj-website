@@ -1,0 +1,50 @@
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+/* #root {
+  height: 100%;
+} */
+@media (max-width: 600px) {
+  .ant-layout .ant-layout-has-sider  {
+    min-height: 250vh
+  }
+  }
+.header {
+  background-color: white;
+}
+
+.logo {
+  float: left;
+  margin: 10px 10px 10px 30px;
+}
+
+.css-dev-only-do-not-override-10ed4xt .ant-layout .ant-layout-sider-trigger {
+  color: black;
+  background-color: transparent
+}
+.container {
+  /* This helps contain the floated element and the context */
+  overflow: auto;
+}
+
+.float-left {
+  float: left;
+  width: 50%; /* You can adjust the width as needed */
+  /* Other styling for the floated element */
+}
+
+.context-below {
+  clear: left; /* This clears the float and ensures the context appears below */
+  /* Other styling for the context */
+}
+.ant-layout-sider-trigger {
+
+
+  background-color: #f3f7ff!important;
+  color: #000!important;
+  opacity: 85%;
+  
+}
+

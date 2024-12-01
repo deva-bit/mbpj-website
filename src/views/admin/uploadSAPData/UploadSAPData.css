@@ -1,0 +1,14 @@
+ .buttonStyle {
+    margin-right: 10px!important;
+  };
+  .buttonStyleUpload{
+    margin-right: 10px!important;
+    margin-bottom:20px!important;
+  }
+.containerStyle {
+    display: flex;
+    justify-content: 'space-between',
+  };
+  
+
+  

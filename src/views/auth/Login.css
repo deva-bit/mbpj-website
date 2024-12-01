@@ -1,0 +1,40 @@
+.login-container {
+    width: 100%;
+    height: 100vh;
+    background-image: url("../../images/landing_bg.png");
+    /* background-color: #FAEBEFFF; */
+    background-size: cover;
+}
+
+.logo-wrapper {
+    display: flex;
+    justify-content: center;
+    padding: 3% 0;
+}
+
+.login-form-wrapper {
+    padding: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btn-pastel:hover {
+    background-position: right center; /* change the direction of the change here */
+}
+
+.btn-pastel {
+    width: 200px;
+    flex: 1 1 auto;
+    margin: 10px;
+    text-align: center;
+    transition: 1s !important;
+    background-size: 200% auto;
+    color: aliceblue !important;
+    font-size: 24px !important;
+    text-shadow: 0px 0px 10px rgba(0,0,0,0.4);
+    box-shadow: 0 0 20px #eee;
+    border-radius: 10px;
+    background-image: linear-gradient(to right, #a1c4fd 0%, #c2e9fb 51%, #a1c4fd 100%);
+}

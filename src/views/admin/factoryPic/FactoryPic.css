@@ -1,0 +1,9 @@
+.ant-modal-footer {
+    display: none;
+  }
+  :where(.css-dev-only-do-not-override-10ed4xt).ant-col-offset-8 {
+    margin-inline-start: 64.333333%;
+  }
+  button#btn-submit {
+    margin-right: 14px;
+  }

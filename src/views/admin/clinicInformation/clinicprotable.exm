@@ -1,0 +1,350 @@
+//currently not in use in future someone can continue
+
+import React, { useState } from "react";
+import { Space, Table, Button, Modal, Form, Input } from 'antd';
+import { Card } from 'antd';
+import { ProTable } from '@ant-design/pro-table';
+import { ConfigProvider } from 'antd';
+import enUS from 'antd/lib/locale/en_US';
+import ClinicInfoModal from './ClinicInfoModal';
+import { ProProvider } from '@ant-design/pro-provider';
+
+import {
+  PlusOutlined
+} from '@ant-design/icons';
+
+const ClinicInformation = () => {
+  const [detailsModal, setDetailsModal] = useState(false);
+
+  const [form] = Form.useForm();
+
+  interface User {
+    id: number;
+    name: string;
+    email: string;
+  }
+
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [selectedUser, setSelectedUser] = useState<User | undefined>(undefined);
+
+  const users: User[] = [
+    { id: 1, name: 'John Doe', email: 'john.doe@example.com' },
+    { id: 2, name: 'Jane Doe', email: 'jane.doe@example.com' },
+    { id: 3, name: 'Bob Smith', email: 'bob.smith@example.com' },
+  ];
+
+  const columns = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      key: 'id',
+    },
+    {
+      title: 'Name',
+      dataIndex: 'name',
+      key: 'name',
+    },
+    {
+      title: 'Email',
+      dataIndex: 'email',
+      key: 'email',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_: any, record: { id: number }) => (
+        <Space size="middle">
+          <Button type="primary" onClick={() => handleEdit(record)}>Edit</Button>
+        </Space>
+      ),
+    },
+  ];
+
+  const dataSource = users.map((user) => {
+    return {
+      key: user.id,
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+  });
+
+  const handleEdit = (record: { id: number }) => {
+    const user = users.find((u) => u.id === record.id);
+
+    if (user) {
+      const updatedUser = { ...user };
+      setSelectedUser(updatedUser);
+      setIsModalVisible(true);
+    }
+  };
+
+  const handleOk = () => {
+    form
+      .validateFields()
+      .then((values) => {
+        console.log(values);
+        setIsModalVisible(false);
+        form.resetFields();
+      })
+      .catch((info) => {
+        console.log('Validate Failed:', info);
+      });
+  };
+
+  const handleCancel = () => {
+    setIsModalVisible(false);
+    form.resetFields();
+  };
+
+  const [isNewItemModalVisible, setIsNewItemModalVisible] = useState(false);
+
+  const handleOpenNewItemModal = () => {
+    setIsNewItemModalVisible(true);
+  };
+
+  const handleCloseNewItemModal = () => {
+    setIsNewItemModalVisible(false);
+  };
+
+  const handleSearch = (value: string) => {
+    if (value === '') {
+      setFilteredDataSource(dataSource);
+      return true;
+    }
+  
+    const filteredData = dataSource.filter(user => user.name.toLowerCase().includes(value.toLowerCase()));
+    setFilteredDataSource(filteredData);
+    return true;
+  };
+
+  const [filteredDataSource, setFilteredDataSource] = useState(dataSource);
+
+
+
+  return (
+    <div>
+      <ConfigProvider locale={enUS}>
+    
+        <ProTable<any>
+          
+          columns={columns}
+          dataSource={filteredDataSource}
+          pagination={{
+            pageSize: 10,
+          }}
+          options={{
+            search: {
+              onSearch: handleSearch,
+              allowClear: true,
+            },
+            fullScreen: true,
+            setting: true,
+            density: true,
+          
+          }}
+          rowKey="key"
+          headerTitle="Clinic Information"
+          toolBarRender={() => [
+            <Button key="button" onClick={handleOpenNewItemModal} type="primary">
+              <PlusOutlined /> Add New Item
+            </Button>,
+          ]}
+          dateFormatter="string"
+          size="middle"
+        />
+      
+        <Modal
+          title="Edit User"
+          visible={isModalVisible}
+          onOk={handleOk}
+          onCancel={handleCancel}
+          okText="Submit"
+        >
+          <Form form={form}>
+            <Form.Item label="Name">
+              <Input value={selectedUser?.name} />
+            </Form.Item>
+            <Form.Item label="Email">
+              <Input value={selectedUser?.email} />
+            </Form.Item>
+          </Form>
+        </Modal>
+
+        <Modal
+          title="Add Clinic Information"
+          visible={isNewItemModalVisible}
+          onOk={handleCloseNewItemModal}
+          onCancel={handleCloseNewItemModal}
+          okText="Submit"
+        >
+
+        </Modal>
+           
+     
+      </ConfigProvider>
+    </div>
+  );
+}
+export default ClinicInformation;
+
+
+import { useState } from "react";
+import { EllipsisOutlined, SearchOutlined } from '@ant-design/icons';
+import type { ProColumns } from '@ant-design/pro-components';
+import { ProTable, TableDropdown } from '@ant-design/pro-components';
+import { Button, Dropdown, Input } from 'antd';
+import './HRReport.css';
+
+const valueEnum: { [key: number]: string } = {
+  0: 'close',
+  1: 'running',
+  2: 'online',
+  3: 'error',
+};
+
+export type TableListItem = {
+  key: number;
+  name: string;
+  containers: number;
+  creator: string;
+  status: string;
+  createdAt: number;
+  progress: number;
+  money: number;
+  memo: string;
+};
+
+const HRReport = () => {
+  const [tableListDataSource] = useState<TableListItem[]>([]);
+
+  const creators = ['付小小', '曲丽丽', '林东东', '陈帅帅', '兼某某'];
+
+  for (let i = 0; i < 5; i += 1) {
+    tableListDataSource.push({
+      key: i,
+      name: 'AppName',
+      containers: Math.floor(Math.random() * 20),
+      creator: creators[Math.floor(Math.random() * creators.length)],
+      status: valueEnum[Math.floor(Math.random() * 10) % 4],
+      createdAt: Date.now() - Math.floor(Math.random() * 2000),
+      money: Math.floor(Math.random() * 2000) * i,
+      progress: Math.ceil(Math.random() * 100) + 1,
+      memo:
+        i % 2 === 1
+          ? '很长很长很长很长很长很长很长的文字要展示但是要留下尾巴'
+          : '简短备注文案',
+    });
+  }
+
+  const columns: ProColumns<TableListItem>[] = [
+    {
+      title: 'ID',
+      dataIndex: 'id',
+      valueType: 'indexBorder',
+      width: 48,
+    },
+    {
+      title: 'Clinic visit date',
+      dataIndex: 'clinicVisitDate',
+      render: (_) => <a>{_}</a>,
+      filterDropdown: () => (
+        <div style={{ padding: 8 }}>
+          <Input style={{ width: 188, marginBlockEnd: 8, display: 'block' }} />
+        </div>
+      ),
+      filterIcon: (filtered) => (
+        <SearchOutlined style={{ color: filtered ? '#1890ff' : undefined }} />
+      ),
+    },
+    {
+      title: 'Badge ID',
+      dataIndex: 'creator',
+      // Use valueEnum if needed
+    },
+    {
+      title: 'Name',
+      dataIndex: 'status',
+      filters: true,
+      onFilter: true,
+      // Use valueEnum if needed
+    },
+    {
+      title: 'Factory',
+    },
+    {
+      title: 'Department',
+    },
+    {
+      title: 'Employee Type',
+    },
+    {
+      title: 'Employee Status',
+    },
+    {
+      title: 'Diagnosis',
+    },
+    {
+      title: 'MC Days',
+    },
+    {
+      title: 'MC Date From',
+    },
+    {
+      title: 'MC Date To',
+    },
+    {
+      title: 'Consultation Fee',
+    },
+    {
+      title: 'Medicine/Treatment Fee',
+    },
+    {
+      title: 'Total',
+    },
+  ];
+
+  return (
+    <ProTable<TableListItem>
+      columns={columns}
+      request={async (params, sorter, filter) => {
+        console.log(params, sorter, filter);
+        const filteredData = tableListDataSource.filter((item) => {
+          for (const key in params) {
+            if (params.hasOwnProperty(key)) {
+              const paramValue = params[key];
+              if (paramValue && item[key]) {
+                if (!item[key].toString().includes(paramValue.toString())) {
+                  return false;
+                }
+              }
+            }
+          }
+          return true;
+        });
+        return {
+          data: filteredData,
+          success: true,
+          total: filteredData.length,
+        };
+      }}
+      rowKey="key"
+      pagination={{
+        showQuickJumper: true,
+        showTotal: (total, range) => `${range[0]}-${range[1]} of ${total} items`,
+      }}
+      search={{
+        layout: 'vertical',
+        defaultCollapsed: false,
+      }}
+      dateFormatter="string"
+      toolBarRender={() => [
+        <Button type="primary" key="primary">
+          Download
+        </Button>,
+      ]}
+    />
+  );
+};
+
+export default HRReport;

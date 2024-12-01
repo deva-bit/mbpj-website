@@ -1,0 +1,285 @@
+import React, { useState } from 'react';
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons';
+import { Button, Card, Col, Divider, Form, Input, Row, Select, Tabs, TimePicker } from 'antd';
+import TextArea from 'antd/es/input/TextArea';
+import './ClinicInformation.css';
+
+
+
+const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+
+const status = [
+    { label: 'active', value: 'active' },
+    { label: 'inactive', value: 'inactive' },
+];
+const ClinicInformationEdit = () => {
+    const [businessHourCount, setBusinessHourCount] = useState(0);
+    const handleAddBusinessHour = () => {
+        if (businessHourCount < 3) {
+          setBusinessHourCount((prevCount) => prevCount + 1);
+          
+        }
+      };
+    const saveButton = <Button className="tabs-extra-demo-button" type="primary" htmlType="submit" >Submit</Button>
+   
+    return (
+        <Card>
+            <Form name="item_form" >
+                <Tabs className="card-tabs" tabBarExtraContent={saveButton}>
+                    <Tabs.TabPane tab="Clinic Information" key='clinicInfo'>
+                        <Form.Item name="clinic_id" label="Clinic ID" labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} rules={[{ required: true, message: 'Please select the Clinic ID!' }]}>
+                            <Select>
+                                <Select.Option value="demo">Demo</Select.Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item name="clinic_group" label="Clinic Group" labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} rules={[{ required: true, message: 'Please select the Clinic Group!' }]}>
+                            <Select>
+                                <Select.Option value="demo">Demo</Select.Option>
+                            </Select>
+                        </Form.Item>
+                        <Form.Item name="status" label="Status" labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} rules={[{ required: true, message: 'Please select the Status!' }]}>
+                            <Select options={status}>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item name="name" label="Name" labelCol={{ span: 4 }} wrapperCol={{ span: 16 }} rules={[{ required: true, message: 'Please input the Name!' }]}>
+                            <Input />
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Address"
+                            name="address"
+                            rules={[{ required: true, message: 'Please input the Address!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <TextArea />
+                        </Form.Item>
+                        <Form.Item
+                            label="City"
+                            name="city"
+                            rules={[{ required: true, message: 'Please input the City!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="State"
+                            name="state"
+                            rules={[{ required: true, message: 'Please input the State!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Postal Code"
+                            name="postal_code"
+                            rules={[{ required: true, message: 'Please input the Postal Code!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+                        </Form.Item>
+                        <Form.Item
+                            label="Country"
+                            name="country"
+                            rules={[{ required: true, message: 'Please select the Country!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Select>
+                                <Select.Option value="demo">Demo</Select.Option>
+                            </Select>
+                        </Form.Item>
+
+                        <Form.Item
+                            label="Tel.NO"
+                            name="city"
+                            rules={[{ required: true, message: 'Please input your Tel.NO!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+
+                        </Form.Item>
+                        <Form.Item
+                            label="Fax.no"
+                            name="fax_no"
+                            rules={[{ required: false }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+
+                        </Form.Item>
+                        <Form.Item
+                            label="Contact Person"
+                            name="contact_person"
+                            rules={[{ required: true, message: 'Please input your Contact Person!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+
+                        </Form.Item>
+                        <Form.Item
+                            label="Designation"
+                            name="designation"
+                            rules={[{ required: true, message: 'Please input your Designation!' }]}
+                            labelCol={{ span: 4 }} wrapperCol={{ span: 16 }}>
+                            <Input />
+
+                        </Form.Item>
+                    </Tabs.TabPane>
+
+                    <Tabs.TabPane tab="Business Hours" key='businessHours'>
+                        <div>
+                            <Row gutter={16}>
+                                <Col span={10}>
+                                    <Form.Item
+
+                                        label="From"
+                                        name={['from']}
+                                        rules={[{ required: true, message: 'Please select the Date!' }]}
+                                    >
+                                        <Select className="day-select">
+                                            {days.map((day) => (
+                                                <Select.Option key={day} value={day}>{day}</Select.Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                                <Col span={10}>
+                                    <Form.Item
+
+                                        label="To"
+                                        name={['to']}
+                                        rules={[{ required: true, message: 'Please select the Date!' }]}
+                                    >
+                                        <Select className="day-select">
+                                            {days.map((day) => (
+                                                <Select.Option key={day} value={day}>{day}</Select.Option>
+                                            ))}
+                                        </Select>
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </div>
+                        <div>
+                            <Row gutter={16}>
+                                <Col span={10}>
+                                    <Form.Item
+                                        label="From"
+                                        name={['from']}
+                                        rules={[{ required: true, message: 'Please select the Time!' }]}
+                                    >
+                                        <TimePicker className="time-picker" format="HH:mm:ss" />
+
+                                    </Form.Item>
+                                </Col>
+                                <Col span={10}>
+                                    <Form.Item
+
+                                        label="To"
+                                        name={['from']}
+                                        rules={[{ required: true, message: 'Please select the Time!' }]}
+                                    >
+                                        <TimePicker className="time-picker" format="HH:mm:ss" />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </div>
+                        <Form.List name="sights">
+                            {(fields, { add, remove }) => (
+                                <>
+                                    {fields.map((field) => (
+                                        <div key={field.key}>
+
+                                            <div>
+                                                <Row gutter={16}>
+                                                    <Col span={10}>
+                                                        <Form.Item
+
+                                                            label="From"
+                                                            name={['from']}
+                                                            rules={[{ required: true, message: 'Please select the Date!' }]}
+                                                        >
+                                                            <Select className="day-select">
+                                                                {days.map((day) => (
+                                                                    <Select.Option key={day} value={day}>{day}</Select.Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col span={10}>
+                                                        <Form.Item
+
+                                                            label="To"
+                                                            name={['to']}
+                                                            rules={[{ required: true, message: 'Please select the Date!' }]}
+                                                        >
+                                                            <Select className="day-select">
+                                                                {days.map((day) => (
+                                                                    <Select.Option key={day} value={day}>{day}</Select.Option>
+                                                                ))}
+                                                            </Select>
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col span={2}>
+                                                        <Form.Item>
+                                                            <MinusCircleOutlined onClick={() => {remove(field.name);setBusinessHourCount((prevCount) => prevCount - 1);}} />
+                                                        </Form.Item></Col>
+                                                </Row>
+                                            </div>
+                                            <div>
+                                                <Row gutter={16}>
+                                                    <Col span={10}>
+                                                        <Form.Item
+                                                            label="From"
+                                                            name={['from']}
+                                                            rules={[{ required: true, message: 'Please select the Time!' }]}
+                                                        >
+                                                            <TimePicker className="time-picker" format="HH:mm:ss" />
+
+                                                        </Form.Item>
+                                                    </Col>
+                                                    <Col span={10}>
+                                                        <Form.Item
+                                                            label="To"
+                                                            name={['to']}
+                                                            rules={[{ required: true, message: 'Please select the Time!' }]}
+                                                        >
+                                                            <TimePicker className="time-picker" format="HH:mm:ss" />
+
+                                                        </Form.Item>
+                                                    </Col>
+                                                </Row>
+                                            </div>
+                                            <div>
+
+                                            </div>
+
+                                        </div>
+                                    ))}
+                                    <Form.Item wrapperCol={{ span: 20 }}>
+                                        <Button type="dashed" onClick={() => {handleAddBusinessHour();if (businessHourCount < 3) {add()}}} block icon={<PlusOutlined />}>
+                                            Add Business Hour
+                                        </Button>
+                                    </Form.Item>
+                                </>
+                            )}
+                        </Form.List>
+
+                        <Form.Item className="label-class" label="In-House Period" style={{ border: '1px solid #d9d9d9', padding: '16px', }}>
+                            <Row gutter={16}>
+                                <Col>
+                                    <Form.Item label="From" name="field1">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                                <Col>
+                                    <Form.Item label="To" name="field2">
+                                        <Input />
+                                    </Form.Item>
+                                </Col>
+                            </Row>
+                        </Form.Item>
+
+                    </Tabs.TabPane>
+                </Tabs>
+            </Form>
+        </Card>
+    );
+
+}
+
+
+export default ClinicInformationEdit;
+

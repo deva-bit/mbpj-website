@@ -1,0 +1,3 @@
+:where(.css-dev-only-do-not-override-10ed4xt).ant-layout.ant-layout-has-sider >.ant-layout, :where(.css-dev-only-do-not-override-10ed4xt).ant-layout.ant-layout-has-sider >.ant-layout-content {
+    width: auto;
+}

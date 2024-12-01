@@ -1,0 +1,40 @@
+{
+  "name": "tgeclinic-web",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@ant-design/icons": "^5.0.1",
+    "@ant-design/pro-components": "^2.6.4",
+    "@ant-design/pro-provider": "^2.6.1",
+    "@ant-design/pro-table": "^3.9.0",
+    "@reduxjs/toolkit": "^1.9.3",
+    "@tanstack/react-query": "^4.24.10",
+    "antd": "^5.9.2",
+    "aws-amplify": "^5.0.16",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.9",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-highlight-words": "^0.20.0",
+    "react-query": "^3.39.3",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.14.0",
+    "react-select": "^5.7.4",
+    "redux-persist": "^6.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@types/react-highlight-words": "^0.16.4",
+    "@vitejs/plugin-react": "^3.1.0",
+    "typescript": "^4.9.3",
+    "vite": "^4.1.0"
+  }
+}

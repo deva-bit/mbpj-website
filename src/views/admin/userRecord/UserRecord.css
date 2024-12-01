@@ -1,0 +1,10 @@
+:where(.css-dev-only-do-not-override-10ed4xt).ant-layout.ant-layout-has-sider >.ant-layout, :where(.css-dev-only-do-not-override-10ed4xt).ant-layout.ant-layout-has-sider >.ant-layout-content {
+    width: auto;
+}
+/* :where(.css-dev-only-do-not-override-1vr7spz).ant-form-item .ant-form-item-label {
+    flex-grow: 0;
+    overflow: hidden;
+    white-space: inherit !important;
+    text-align: inherit !important;
+    vertical-align: middle;
+} */
