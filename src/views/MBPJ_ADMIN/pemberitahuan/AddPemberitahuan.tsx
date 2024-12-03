@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { Form, Input, DatePicker, Checkbox, Upload, Button, Card, Space, Typography, Row, Col } from "antd";
-import { UploadOutlined, CheckOutlined, DeleteOutlined, ArrowLeftOutlined } from "@ant-design/icons";
+import React from 'react';
+import { Form, Input, DatePicker, Checkbox, Upload, Button, Card, Space, Typography, Row, Col, message } from "antd";
+import { UploadOutlined, CheckOutlined, DeleteOutlined, ArrowLeftOutlined, InboxOutlined } from "@ant-design/icons";
 
 const { TextArea } = Input;
 const { Title } = Typography;
+const { Dragger } = Upload;
 
 const PemberitahuanAddPage = ({ onBack }: { onBack: () => void }) => {
   const [form] = Form.useForm();
@@ -14,9 +15,29 @@ const PemberitahuanAddPage = ({ onBack }: { onBack: () => void }) => {
   };
 
   const uploadProps = {
+    name: 'file',
+    multiple: false,
     beforeUpload: (file: any) => {
-      console.log(file);
-      return false; // Prevent automatic upload
+      const isImage = file.type.startsWith("image/");
+      const isLt2M = file.size / 1024 / 1024 < 2; // Limit to 2MB
+      if (!isImage) {
+        message.error("You can only upload image files!");
+      }
+      if (!isLt2M) {
+        message.error("Image must be smaller than 2MB!");
+      }
+      return isImage && isLt2M;
+    },
+    onChange(info: any) {
+      const { status } = info.file;
+      if (status === 'done') {
+        message.success(`${info.file.name} file uploaded successfully.`);
+      } else if (status === 'error') {
+        message.error(`${info.file.name} file upload failed.`);
+      }
+    },
+    onDrop(e: any) {
+      console.log('Dropped files', e.dataTransfer.files);
     },
   };
 
@@ -64,7 +85,7 @@ const PemberitahuanAddPage = ({ onBack }: { onBack: () => void }) => {
           <Form.Item
             label="Title"
             name="title"
-            rules={[{ required: true, message: "Please enter the title" }]}>
+            rules={[{ required: true, message: "Please enter the title" }]} >
             <Input placeholder="Enter title" />
           </Form.Item>
 
@@ -99,16 +120,13 @@ const PemberitahuanAddPage = ({ onBack }: { onBack: () => void }) => {
           </Form.Item>
 
           {/* Image Upload */}
-          <Form.Item
-            label="Image"
-            name="image"
-            valuePropName="file">
-            <Upload {...uploadProps} listType="picture-card">
+          <Form.Item label="Image" name="image" valuePropName="fileList">
+            <Dragger {...uploadProps} showUploadList={false} style={{ width: '100%', height: '200px' }}>
               <div>
-                <UploadOutlined />
+                <InboxOutlined />
                 <div style={{ marginTop: 8 }}>Upload Image from your computer</div>
               </div>
-            </Upload>
+            </Dragger>
           </Form.Item>
 
           {/* Text Field */}
